@@ -157,7 +157,7 @@ branch unchanged, matching an unset `situ_linear_beta` in FlashInfer.
 `activation_alpha` must be positive, and `activation_clamp` applies only to
 SwiGLU.
 
-On SM90, `fp8_fp4_mega_moe` takes FP4 routed weights (`mma_type='fp8xfp4'`) with `swiglu` or `swiglustep` only.
+On SM90, `fp8_fp4_mega_moe` takes FP4 routed weights (`mma_type='fp8xfp4'`) and supports `swiglu`, `swiglustep`, and `situ`.
 Its recipe is `(1, 1, 128)`, the default there: `buffer.x_sf` holds one FP32 scale `amax / 448` per 128 channels, as the bits of each word.
 `transform_weights_for_mega_moe` also re-encodes the weights and SF for SM90, first raises FP4 groups more than 11 exponents below their row maximum (re-rounding their codes), then asserts that the SF exponents of each FP4 weight row span at most 11; 32-element groups with all-zero codes are exempt (without the weights, only 128-channel blocks whose 4 exponents are all 0), and rows with a maximum exponent below 7 (such as zero padding) get a zero scale.
 
